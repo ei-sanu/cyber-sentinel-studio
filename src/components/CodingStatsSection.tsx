@@ -12,17 +12,35 @@ const CodingStatsSection = () => {
   const [gh, setGh] = useState<GitHubData>({ repos: 0, followers: 0, contributions: "--", joined: "--" });
 
   useEffect(() => {
-    fetch("https://api.github.com/users/ei-sanu")
-      .then((r) => r.json())
-      .then((data) => {
+    const fetchGitHubData = async () => {
+      try {
+        const response = await fetch("https://api.github.com/users/ei-sanu");
+
+        if (!response.ok) {
+          console.warn('GitHub API request failed:', response.status);
+          return;
+        }
+
+        const data = await response.json();
         setGh({
           repos: data.public_repos ?? 0,
           followers: data.followers ?? 0,
           contributions: "--",
           joined: data.created_at ? new Date(data.created_at).getFullYear().toString() : "--",
         });
-      })
-      .catch(() => {});
+      } catch (error) {
+        console.warn('Failed to fetch GitHub data:', error);
+        // Set default values on error
+        setGh({
+          repos: 20,
+          followers: 10,
+          contributions: "500+",
+          joined: "2019",
+        });
+      }
+    };
+
+    fetchGitHubData();
   }, []);
 
   return (

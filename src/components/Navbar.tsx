@@ -1,8 +1,10 @@
 import { useAuth } from "@/contexts/AuthContext";
-import { LogOut, Settings, User } from "lucide-react";
+import { isAdmin, supabase } from "@/lib/supabase";
+import { Bell, LogOut, Settings, Shield, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthModal from "./AuthModal";
+import NotificationsPanel from "./NotificationsPanel";
 import ProfileDropdown from "./ProfileDropdown";
 
 const navLinks = [
@@ -17,6 +19,8 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const { user, signOut } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,9 +39,50 @@ const Navbar = () => {
     }
   }, [location]);
 
+  // Fetch unread notifications count
+  useEffect(() => {
+    if (!user?.email) {
+      setUnreadCount(0);
+      return;
+    }
+
+    const fetchUnreadCount = async () => {
+      try {
+        // Get all active notifications
+        const { data: notifications, error: notificationsError } = await supabase
+          .from('notifications')
+          .select('id')
+          .or('expires_at.is.null,expires_at.gt.' + new Date().toISOString());
+
+        if (notificationsError) throw notificationsError;
+
+        // Get user's read status
+        const { data: userNotifications, error: userNotificationsError } = await supabase
+          .from('user_notifications')
+          .select('notification_id')
+          .eq('user_email', user.email)
+          .eq('is_read', true);
+
+        if (userNotificationsError) throw userNotificationsError;
+
+        const readIds = new Set(userNotifications?.map(un => un.notification_id) || []);
+        const unread = notifications?.filter(n => !readIds.has(n.id)).length || 0;
+        setUnreadCount(unread);
+      } catch (error) {
+        console.error('Error fetching unread count:', error);
+      }
+    };
+
+    fetchUnreadCount();
+
+    // Poll for new notifications every 30 seconds
+    const interval = setInterval(fetchUnreadCount, 30000);
+    return () => clearInterval(interval);
+  }, [user]);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    
+
     // If we're on the home page, just scroll
     if (location.pathname === '/') {
       if (href === "#") {
@@ -100,31 +145,53 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Auth Section - Profile Icon Only */}
+            {/* Auth Section - Notification Bell & Profile Icon */}
             {user ? (
-              <div className="relative">
+              <div className="flex gap-2 items-center">
+                {/* Notification Bell */}
                 <button
-                  onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                  className="w-10 h-10 rounded-full border-2 border-foreground overflow-hidden bg-neo-blue shadow-hard hover:shadow-hard-xl transition-all"
+                  onClick={() => setShowNotifications(true)}
+                  className="relative w-10 h-10 border-2 border-foreground bg-background shadow-hard hover:shadow-hard-xl transition-all flex items-center justify-center"
+                  title="Notifications"
                 >
-                  {user.photoURL ? (
-                    <img
-                      src={user.photoURL}
-                      alt={user.displayName || "User"}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <User size={20} />
-                    </div>
+                  <Bell size={20} />
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-neo-red text-foreground text-xs font-bold rounded-full flex items-center justify-center border border-foreground">
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </span>
                   )}
                 </button>
 
-                <ProfileDropdown
-                  isOpen={showProfileDropdown}
-                  onClose={() => setShowProfileDropdown(false)}
-                  onSignOut={handleSignOut}
-                />
+                {/* Profile Picture */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                    className="w-10 h-10 rounded-full border-2 border-foreground overflow-hidden bg-neo-blue shadow-hard hover:shadow-hard-xl transition-all"
+                  >
+                    {user.photoURL ? (
+                      <img
+                        src={user.photoURL}
+                        alt={user.displayName || "User"}
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                          if (fallback) fallback.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div className="w-full h-full flex items-center justify-center" style={{ display: user.photoURL ? 'none' : 'flex' }}>
+                      <User size={20} />
+                    </div>
+                  </button>
+
+                  <ProfileDropdown
+                    isOpen={showProfileDropdown}
+                    onClose={() => setShowProfileDropdown(false)}
+                    onSignOut={handleSignOut}
+                  />
+                </div>
               </div>
             ) : (
               <button
@@ -182,16 +249,24 @@ const Navbar = () => {
                           src={user.photoURL}
                           alt={user.displayName || "User"}
                           className="w-full h-full object-cover"
+                          referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                            if (fallback) fallback.style.display = 'flex';
+                          }}
                         />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <User size={20} className="text-background" />
-                        </div>
-                      )}
+                      ) : null}
+                      <div className="w-full h-full flex items-center justify-center" style={{ display: user.photoURL ? 'none' : 'flex' }}>
+                        <User size={20} className="text-background" />
+                      </div>
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-neo-green font-bold text-xs truncate">
                         {user.displayName || "User"}
+                        {isAdmin(user.email) && (
+                          <span className="ml-1 text-neo-red">👑</span>
+                        )}
                       </p>
                       <p className="text-neo-green/60 text-xs truncate">{user.email}</p>
                     </div>
@@ -199,6 +274,25 @@ const Navbar = () => {
                   <div className="text-neo-green/60 text-xs space-y-1">
                     <p>📅 Joined: {user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : 'Unknown'}</p>
                   </div>
+
+                  {/* Notification Bell for Mobile */}
+                  <button
+                    onClick={() => {
+                      setShowNotifications(true);
+                      setOpen(false);
+                    }}
+                    className="w-full mt-3 py-2 px-3 bg-neo-cyan/20 border border-neo-cyan text-neo-cyan font-mono text-sm flex items-center justify-between hover:bg-neo-cyan/30"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Bell size={16} />
+                      Notifications
+                    </span>
+                    {unreadCount > 0 && (
+                      <span className="bg-neo-red text-foreground px-2 py-0.5 rounded-full text-xs font-bold">
+                        {unreadCount > 9 ? '9+' : unreadCount}
+                      </span>
+                    )}
+                  </button>
                 </div>
               )}
 
@@ -238,6 +332,20 @@ const Navbar = () => {
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-foreground">→</span> ALL PROJECTS
+                  </span>
+                </Link>
+              )}
+
+              {/* Admin Link - Only show for admin */}
+              {user && isAdmin(user.email) && (
+                <Link
+                  to="/admin"
+                  onClick={() => setOpen(false)}
+                  className="block py-2.5 px-3 mt-2 text-foreground bg-neo-red font-black border border-foreground hover:bg-neo-yellow transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <Shield size={16} />
+                    ADMIN PANEL
                   </span>
                 </Link>
               )}
@@ -286,6 +394,36 @@ const Navbar = () => {
       </nav>
 
       <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      {showNotifications && (
+        <NotificationsPanel
+          onClose={() => {
+            setShowNotifications(false);
+            // Refresh unread count when panel closes
+            if (user?.email) {
+              setTimeout(async () => {
+                try {
+                  const { data: notifications } = await supabase
+                    .from('notifications')
+                    .select('id')
+                    .or('expires_at.is.null,expires_at.gt.' + new Date().toISOString());
+
+                  const { data: userNotifications } = await supabase
+                    .from('user_notifications')
+                    .select('notification_id')
+                    .eq('user_email', user.email)
+                    .eq('is_read', true);
+
+                  const readIds = new Set(userNotifications?.map(un => un.notification_id) || []);
+                  const unread = notifications?.filter(n => !readIds.has(n.id)).length || 0;
+                  setUnreadCount(unread);
+                } catch (error) {
+                  console.error('Error refreshing unread count:', error);
+                }
+              }, 500);
+            }
+          }}
+        />
+      )}
     </>
   );
 };

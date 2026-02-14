@@ -1,21 +1,22 @@
-import Navbar from "@/components/Navbar";
+import AboutSection from "@/components/AboutSection";
+import CodingStatsSection from "@/components/CodingStatsSection";
+import ContactSection from "@/components/ContactSection";
+import CustomCursor from "@/components/CustomCursor";
+import EducationSection from "@/components/EducationSection";
+import ExperienceSection from "@/components/ExperienceSection";
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import MarqueeBanner from "@/components/MarqueeBanner";
-import AboutSection from "@/components/AboutSection";
-import SkillsSection from "@/components/SkillsSection";
-import ExperienceSection from "@/components/ExperienceSection";
-import EducationSection from "@/components/EducationSection";
-import ProjectsSection from "@/components/ProjectsSection";
-import CodingStatsSection from "@/components/CodingStatsSection";
-import UserReportsSection from "@/components/UserReportsSection";
-import ServicesSection from "@/components/ServicesSection";
+import Navbar from "@/components/Navbar";
 import NewsletterSection from "@/components/NewsletterSection";
-import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
-import ProgressBar from "@/components/ProgressBar";
-import ScrollReveal from "@/components/ScrollReveal";
-import CustomCursor from "@/components/CustomCursor";
 import PageLoader from "@/components/PageLoader";
+import ProgressBar from "@/components/ProgressBar";
+import ProjectsSection from "@/components/ProjectsSection";
+import ScrollReveal from "@/components/ScrollReveal";
+import ScrollToTop from "@/components/ScrollToTop";
+import ServicesSection from "@/components/ServicesSection";
+import SkillsSection from "@/components/SkillsSection";
+import UserReportsSection from "@/components/UserReportsSection";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
       <CustomCursor />
       <ProgressBar />
       <ScrollReveal />
+      <ScrollToTop />
       <Navbar />
       <HeroSection />
       <MarqueeBanner />

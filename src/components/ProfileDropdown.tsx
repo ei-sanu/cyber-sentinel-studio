@@ -1,5 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
-import { Calendar, LogOut, Mail, User } from "lucide-react";
+import { isAdmin } from "@/lib/supabase";
+import { Calendar, LogOut, Mail, Shield, User } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
@@ -100,6 +101,17 @@ const ProfileDropdown = ({ isOpen, onClose, onSignOut }: ProfileDropdownProps) =
 
             {/* Actions */}
             <div className="p-3 space-y-2">
+                {isAdmin(user.email) && (
+                    <Link
+                        to="/admin"
+                        onClick={onClose}
+                        className="neo-btn w-full bg-neo-red text-foreground border-2 border-foreground px-4 py-2 text-sm shadow-hard hover:bg-neo-yellow hover:text-foreground flex items-center justify-center gap-2 font-bold"
+                    >
+                        <Shield size={16} />
+                        ADMIN PANEL
+                    </Link>
+                )}
+
                 <Link
                     to="/projects"
                     onClick={onClose}

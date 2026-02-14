@@ -9,7 +9,7 @@ const EducationSection = () => (
         <div className="absolute -left-[14px] top-2 w-6 h-6 bg-neo-green border-4 border-foreground" />
         <div className="bg-card border-2 sm:border-4 border-foreground p-4 sm:p-6 shadow-hard hover:shadow-hard-xl transition-all">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-dashed border-muted pb-3 sm:pb-4 mb-3 sm:mb-4">
-            <h3 className="text-xl sm:text-3xl font-black uppercase">Cybersecurity Specialist</h3>
+            <h3 className="text-xl sm:text-3xl font-black uppercase">LOVELY PROFESSIONAL UNIVERSITY</h3>
             <span className="font-mono font-bold bg-foreground text-background px-2 py-1 text-xs sm:text-sm mt-2 md:mt-0">2024 - 2028</span>
           </div>
           <p className="font-mono text-base sm:text-xl mb-2 text-neo-blue font-bold">@ B.Tech in Computer Science & Engineering</p>
