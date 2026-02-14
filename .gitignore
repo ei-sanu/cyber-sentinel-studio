@@ -25,4 +25,5 @@ dist-ssr
 
 .env
 .supabase-schema.sql
+.supabase-complete-schema.sql
 
