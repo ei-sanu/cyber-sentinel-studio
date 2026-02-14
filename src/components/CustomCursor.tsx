@@ -1,10 +1,16 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const CustomCursor = () => {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    // Detect touch device
+    const hasTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    setIsTouchDevice(hasTouch);
+    if (hasTouch) return;
+
     const dot = dotRef.current;
     const ring = ringRef.current;
     if (!dot || !ring) return;
@@ -14,6 +20,7 @@ const CustomCursor = () => {
     let ringX = -100;
     let ringY = -100;
     let rafId: number;
+    let isHovering = false;
 
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -32,81 +39,112 @@ const CustomCursor = () => {
     rafId = requestAnimationFrame(animate);
 
     const expand = () => {
-      ring.style.width = "56px";
-      ring.style.height = "56px";
-      ring.style.background = "hsl(59 100% 64%)";
-      ring.style.borderColor = "hsl(0 0% 7%)";
+      if (isHovering) return;
+      isHovering = true;
+      // Neo-yellow block on hover
+      ring.style.width = "52px";
+      ring.style.height = "52px";
+      ring.style.background = "#FBFF48";
+      ring.style.border = "3px solid #121212";
       ring.style.borderRadius = "0px";
+      ring.style.mixBlendMode = "difference";
       dot.style.opacity = "0";
     };
 
     const shrink = () => {
-      ring.style.width = "36px";
-      ring.style.height = "36px";
+      isHovering = false;
+      // Crosshair ring
+      ring.style.width = "32px";
+      ring.style.height = "32px";
       ring.style.background = "transparent";
-      ring.style.borderColor = "white";
+      ring.style.border = "2px solid #FBFF48";
       ring.style.borderRadius = "50%";
+      ring.style.mixBlendMode = "normal";
       dot.style.opacity = "1";
     };
 
     const onOver = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      if (t.closest("a") || t.closest("button") || t.closest("input") || t.closest("textarea")) expand();
+      if (t.closest("a") || t.closest("button") || t.closest("input") || t.closest("textarea")) {
+        expand();
+      }
     };
+
     const onOut = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      if (t.closest("a") || t.closest("button") || t.closest("input") || t.closest("textarea")) shrink();
+      if (t.closest("a") || t.closest("button") || t.closest("input") || t.closest("textarea")) {
+        shrink();
+      }
+    };
+
+    const onLeave = () => {
+      dot.style.opacity = "0";
+      ring.style.opacity = "0";
+    };
+
+    const onEnter = () => {
+      dot.style.opacity = "1";
+      ring.style.opacity = "1";
     };
 
     window.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseover", onOver);
     document.addEventListener("mouseout", onOut);
+    document.documentElement.addEventListener("mouseleave", onLeave);
+    document.documentElement.addEventListener("mouseenter", onEnter);
+
+    // Start with shrink defaults
+    shrink();
 
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);
+      document.documentElement.removeEventListener("mouseleave", onLeave);
+      document.documentElement.removeEventListener("mouseenter", onEnter);
     };
-  }, []);
+  }, [isTouchDevice]);
+
+  if (isTouchDevice) return null;
 
   return (
     <>
+      {/* Center dot */}
       <div
         ref={dotRef}
         style={{
           position: "fixed",
-          width: 8,
-          height: 8,
-          background: "white",
+          width: 6,
+          height: 6,
+          background: "#FBFF48",
+          borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 99999,
           transform: "translate(-50%, -50%)",
-          mixBlendMode: "difference",
-          transition: "opacity 0.2s",
+          transition: "opacity 0.15s",
           left: -100,
           top: -100,
+          boxShadow: "0 0 6px 2px rgba(251,255,72,0.5)",
         }}
-        className="hidden lg:block"
       />
+      {/* Outer ring */}
       <div
         ref={ringRef}
         style={{
           position: "fixed",
-          width: 36,
-          height: 36,
+          width: 32,
+          height: 32,
           background: "transparent",
-          border: "2px solid white",
+          border: "2px solid #FBFF48",
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 99998,
           transform: "translate(-50%, -50%)",
-          mixBlendMode: "difference",
-          transition: "width 0.3s, height 0.3s, background 0.3s, border-radius 0.3s, border-color 0.3s",
+          transition: "width 0.3s cubic-bezier(.25,1,.5,1), height 0.3s cubic-bezier(.25,1,.5,1), background 0.3s, border-radius 0.3s, border 0.3s, opacity 0.15s, mix-blend-mode 0.3s",
           left: -100,
           top: -100,
         }}
-        className="hidden lg:block"
       />
     </>
   );

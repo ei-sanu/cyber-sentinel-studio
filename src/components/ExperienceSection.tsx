@@ -38,22 +38,22 @@ const experiences = [
 ];
 
 const ExperienceSection = () => (
-  <section id="experience" className="py-24 px-4 max-w-7xl mx-auto">
-    <h2 className="text-5xl md:text-8xl font-black uppercase mb-12 tracking-tighter text-center">
+  <section id="experience" className="py-16 sm:py-24 px-4 max-w-7xl mx-auto">
+    <h2 className="text-4xl sm:text-5xl md:text-8xl font-black uppercase mb-8 sm:mb-12 tracking-tighter text-center">
       Experience<span className="text-neo-red">_Log</span>
     </h2>
 
-    <div className="relative border-l-4 border-foreground ml-4 md:ml-10 space-y-12">
+    <div className="relative border-l-4 border-foreground ml-2 sm:ml-4 md:ml-10 space-y-8 sm:space-y-12">
       {experiences.map((exp) => (
-        <div key={exp.title} className="reveal relative pl-8 md:pl-16">
+        <div key={exp.title} className="reveal relative pl-6 sm:pl-8 md:pl-16">
           <div className={`absolute -left-[14px] top-2 w-6 h-6 ${exp.dotColor} border-4 border-foreground`} />
-          <div className="bg-card border-4 border-foreground p-6 shadow-hard hover:shadow-hard-xl transition-all">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-dashed border-muted pb-4 mb-4">
-              <h3 className="text-3xl font-black uppercase">{exp.title}</h3>
-              <span className="font-mono font-bold bg-foreground text-background px-2 py-1">{exp.period}</span>
+          <div className="bg-card border-2 sm:border-4 border-foreground p-4 sm:p-6 shadow-hard hover:shadow-hard-xl transition-all">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-dashed border-muted pb-3 sm:pb-4 mb-3 sm:mb-4">
+              <h3 className="text-xl sm:text-3xl font-black uppercase">{exp.title}</h3>
+              <span className="font-mono font-bold bg-foreground text-background px-2 py-1 text-xs sm:text-sm mt-2 md:mt-0">{exp.period}</span>
             </div>
-            <p className={`font-mono text-xl mb-2 ${exp.color} font-bold`}>{exp.company}</p>
-            <ul className="list-disc list-inside font-mono text-muted-foreground space-y-1">
+            <p className={`font-mono text-base sm:text-xl mb-2 ${exp.color} font-bold`}>{exp.company}</p>
+            <ul className="list-disc list-inside font-mono text-muted-foreground space-y-1 text-sm sm:text-base">
               {exp.items.map((item) => (
                 <li key={item}>{item}</li>
               ))}

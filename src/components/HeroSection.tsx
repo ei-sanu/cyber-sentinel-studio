@@ -16,13 +16,13 @@ const HeroSection = () => {
         </div>
 
         {/* Title */}
-        <h1 className="text-[10vw] md:text-[8vw] leading-[0.85] font-black uppercase tracking-tighter mb-4 reveal">
+        <h1 className="text-[12vw] sm:text-[10vw] md:text-[8vw] leading-[0.85] font-black uppercase tracking-tighter mb-4 reveal">
           CYBERSECURITY<br />
           <span className="text-background text-stroke-black">ENTHUSIAST</span>
         </h1>
 
         {/* Tagline */}
-        <p className="font-mono text-lg md:text-2xl max-w-3xl mx-auto mb-6 bg-neo-green border-2 border-foreground p-4 shadow-hard reveal rotate-1">
+        <p className="font-mono text-sm sm:text-lg md:text-2xl max-w-3xl mx-auto mb-6 bg-neo-green border-2 border-foreground p-3 sm:p-4 shadow-hard reveal rotate-1">
           Full-Stack Developer & Blue Team Defender.<br />
           <b>Full-Stack Dev • Blue Team • Security Analyst • Threat Hunter</b>
         </p>
@@ -40,19 +40,19 @@ const HeroSection = () => {
         </div>
 
         {/* CTAs */}
-        <div className="flex flex-col md:flex-row justify-center gap-6 reveal">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 reveal">
           <a
             href="#projects"
             onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}
-            className="neo-btn bg-foreground text-background border-2 border-foreground px-10 py-5 text-xl shadow-hard hover:bg-neo-green hover:text-foreground"
+            className="neo-btn bg-foreground text-background border-2 border-foreground px-6 sm:px-10 py-4 sm:py-5 text-lg sm:text-xl shadow-hard hover:bg-neo-green hover:text-foreground"
           >
             VIEW PROJECTS
           </a>
           <a
             href="#"
-            className="neo-btn bg-background text-foreground border-2 border-foreground px-10 py-5 text-xl shadow-hard hover:bg-neo-pink hover:text-foreground flex items-center justify-center gap-2"
+            className="neo-btn bg-background text-foreground border-2 border-foreground px-6 sm:px-10 py-4 sm:py-5 text-lg sm:text-xl shadow-hard hover:bg-neo-pink hover:text-foreground flex items-center justify-center gap-2"
           >
-            <Download size={22} /> DOWNLOAD CV
+            <Download size={20} /> DOWNLOAD CV
           </a>
         </div>
       </div>

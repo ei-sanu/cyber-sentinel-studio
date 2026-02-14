@@ -1,6 +1,6 @@
 const AboutSection = () => (
-  <section id="about" className="py-24 px-4 max-w-7xl mx-auto border-x-4 border-foreground bg-card my-12 shadow-hard-lg">
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+  <section id="about" className="py-16 sm:py-24 px-4 max-w-7xl mx-auto border-x-0 sm:border-x-4 border-foreground bg-card my-6 sm:my-12 shadow-hard-lg">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
       {/* Avatar */}
       <div className="md:col-span-4 reveal">
         <div className="aspect-square bg-muted border-4 border-foreground relative shadow-hard overflow-hidden group">
@@ -20,9 +20,9 @@ const AboutSection = () => (
 
       {/* About text */}
       <div className="md:col-span-8 flex flex-col justify-center reveal">
-        <h2 className="text-6xl font-black uppercase mb-2">Who am I?</h2>
-        <h3 className="text-3xl font-black text-neo-blue mb-6">SOMESH RANJAN BISWAL</h3>
-        <p className="font-mono text-xl leading-relaxed mb-6">
+        <h2 className="text-4xl sm:text-6xl font-black uppercase mb-2">Who am I?</h2>
+        <h3 className="text-xl sm:text-3xl font-black text-neo-blue mb-4 sm:mb-6">SOMESH RANJAN BISWAL</h3>
+        <p className="font-mono text-base sm:text-xl leading-relaxed mb-4 sm:mb-6">
           I am a <span className="bg-neo-yellow px-1 border border-foreground">Full-Stack Developer</span> &{" "}
           <span className="bg-neo-green px-1 border border-foreground">Blue Team Cybersecurity Specialist</span>. I build robust web applications and defend digital infrastructures from emerging threats.
         </p>
