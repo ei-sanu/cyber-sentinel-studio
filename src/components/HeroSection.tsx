@@ -44,7 +44,7 @@ const HeroSection = () => {
           <a
             href="#projects"
             onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}
-            className="neo-btn bg-foreground text-background border-2 border-foreground px-6 sm:px-10 py-4 sm:py-5 text-lg sm:text-xl shadow-hard hover:bg-neo-green hover:text-foreground"
+            className="neo-btn bg-foreground text-background border-2 border-foreground px-6 sm:px-10 py-4 sm:py-5 text-lg sm:text-xl shadow-hard hover:bg-neo-yellow hover:text-foreground"
           >
             VIEW PROJECTS
           </a>
