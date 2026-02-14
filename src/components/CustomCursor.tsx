@@ -42,11 +42,11 @@ const CustomCursor = () => {
       if (isHovering) return;
       isHovering = true;
       // Neo-yellow block on hover
-      ring.style.width = "52px";
-      ring.style.height = "52px";
-      ring.style.background = "#FBFF48";
+      ring.style.width = "48px";
+      ring.style.height = "48px";
+      ring.style.background = "#121212";
       ring.style.border = "3px solid #121212";
-      ring.style.borderRadius = "0px";
+      ring.style.borderRadius = "50%";
       ring.style.mixBlendMode = "difference";
       dot.style.opacity = "0";
     };
