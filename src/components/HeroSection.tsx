@@ -43,6 +43,7 @@ const HeroSection = () => {
         <div className="flex flex-col md:flex-row justify-center gap-6 reveal">
           <a
             href="#projects"
+            onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}
             className="neo-btn bg-foreground text-background border-2 border-foreground px-10 py-5 text-xl shadow-hard hover:bg-neo-green hover:text-foreground"
           >
             VIEW PROJECTS
