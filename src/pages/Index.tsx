@@ -19,7 +19,7 @@ import PageLoader from "@/components/PageLoader";
 
 const Index = () => {
   return (
-    <div className="scroll-smooth cursor-none lg:cursor-none">
+    <div className="scroll-smooth lg:cursor-none">
       <PageLoader />
       <CustomCursor />
       <ProgressBar />
