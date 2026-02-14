@@ -179,8 +179,6 @@ const UserReportsSection = () => {
       const errorDetails = error?.details || '';
       const errorHint = error?.hint || '';
 
-      console.log('Error details:', { errorMessage, errorDetails, errorHint });
-
       setTerminalLines(prev => [
         ...prev,
         "$ ERROR: failed to submit comment",

@@ -45,10 +45,14 @@ const Admin = () => {
                 .from('notifications')
                 .select('count')
                 .limit(1);
-            
+
             if (readError) {
                 throw new Error(`Read test failed: ${readError.message}`);
             }
+
+            // Test 2: Can we insert a test notification?
+            const testNotification = {
+                title: 'Test Notification',
                 message: 'This is a test notification to verify database access',
                 type: 'info',
                 created_by: user?.email || 'test@test.com',
@@ -64,6 +68,8 @@ const Admin = () => {
                 throw new Error(`Insert test failed: ${insertError.message}. This likely means the RLS policies need to be updated. Run the supabase-fix-admin-policies.sql file.`);
             }
 
+            // Clean up test notification
+            if (insertData && insertData[0]) {
                 await supabase
                     .from('notifications')
                     .delete()

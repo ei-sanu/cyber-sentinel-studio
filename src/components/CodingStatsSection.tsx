@@ -17,7 +17,6 @@ const CodingStatsSection = () => {
         const response = await fetch("https://api.github.com/users/ei-sanu");
 
         if (!response.ok) {
-          console.warn('GitHub API request failed:', response.status);
           return;
         }
 
@@ -29,7 +28,6 @@ const CodingStatsSection = () => {
           joined: data.created_at ? new Date(data.created_at).getFullYear().toString() : "--",
         });
       } catch (error) {
-        console.warn('Failed to fetch GitHub data:', error);
         // Set default values on error
         setGh({
           repos: 20,
@@ -168,15 +166,18 @@ const CodingStatsSection = () => {
 
               {/* TryHackMe Public Profile Badge via iframe */}
               <div className="flex-1 flex flex-col justify-center mb-8">
-                <div className="border-2 border-neo-red/30 p-2 overflow-hidden hover:border-neo-red transition-colors relative">
-                  <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-neo-red rounded-full animate-pulse" />
-                  <p className="text-[8px] font-mono text-neo-red/50 uppercase tracking-[0.2em] mb-2">Profile_Badge</p>
-                  <iframe
-                    src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=5163573"
-                    className="w-full min-h-[300px] border-none bg-foreground"
-                    title="TryHackMe Profile Badge"
-                    loading="lazy"
-                  />
+                <div className="border-2 border-neo-red/30 p-4 overflow-hidden hover:border-neo-red transition-colors relative bg-background/5">
+                  <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-neo-red rounded-full animate-pulse" />
+                  <p className="text-[8px] font-mono text-neo-red/50 uppercase tracking-[0.2em] mb-3">Profile_Badge</p>
+                  <div className="w-full flex items-center justify-center">
+                    <iframe
+                      src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=5163573"
+                      className="w-full h-[280px] border-none bg-transparent"
+                      title="TryHackMe Profile Badge"
+                      loading="lazy"
+                      scrolling="no"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -188,7 +189,7 @@ const CodingStatsSection = () => {
                   <span className="animate-pulse">_</span>
                 </div>
                 <a
-                  href="https://tryhackme.com/p/5163573"
+                  href="https://tryhackme.com/r/p/5163573"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-neo-red px-3 py-1 font-black uppercase border border-neo-red hover:bg-neo-red hover:text-foreground transition-all"
