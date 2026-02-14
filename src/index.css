@@ -106,7 +106,13 @@
     animation: scroll 40s linear infinite;
     width: max-content;
   }
-  .marquee-container:hover .marquee-content {
+  .marquee-content-reverse {
+    display: flex;
+    animation: scroll-reverse 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-container:hover .marquee-content,
+  .marquee-container:hover .marquee-content-reverse {
     animation-play-state: paused;
   }
 
@@ -146,6 +152,11 @@
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+@keyframes scroll-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
 @keyframes blink {
