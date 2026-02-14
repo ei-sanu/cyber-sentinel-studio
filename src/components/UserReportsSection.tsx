@@ -206,20 +206,20 @@ const UserReportsSection = () => {
   return (
     <section id="reports" className="py-24 bg-foreground border-t-4 border-foreground overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between mb-16">
-          <div className="flex items-center gap-2 bg-background/5 border-2 border-background/10 p-4 shadow-hard">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-16">
+          <div className="flex items-center gap-2 bg-background/5 border-2 border-background/10 p-4 shadow-hard flex-wrap">
             <div className="flex gap-2">
               <div className="h-3 w-3 bg-neo-red rounded-full border border-foreground animate-pulse" />
               <div className="h-3 w-3 bg-neo-yellow rounded-full border border-foreground" />
               <div className="h-3 w-3 bg-neo-green rounded-full border border-foreground" />
             </div>
             <h2 className="font-mono text-background text-xl font-bold ml-4 tracking-tighter">USER_REPORTS.txt</h2>
-            <div className="ml-8 px-2 bg-neo-blue text-foreground text-[10px] font-black uppercase animate-pulse">LIVE_FEED</div>
+            <div className="ml-2 md:ml-8 px-2 bg-neo-blue text-foreground text-[10px] font-black uppercase animate-pulse">LIVE_FEED</div>
           </div>
 
           <button
             onClick={handleAddComment}
-            className="neo-btn bg-neo-green text-foreground border-2 border-background px-6 py-3 font-black shadow-hard hover:bg-neo-yellow hover:scale-105 transition-all duration-300 flex items-center gap-2 uppercase text-sm"
+            className="neo-btn bg-neo-green text-foreground border-2 border-background px-4 md:px-6 py-3 font-black shadow-hard hover:bg-neo-yellow hover:scale-105 transition-all duration-300 flex items-center gap-2 uppercase text-xs md:text-sm w-full md:w-auto justify-center"
           >
             <Terminal size={20} />
             Add Your Comment
