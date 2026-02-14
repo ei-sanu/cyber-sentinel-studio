@@ -4,8 +4,8 @@ const Footer = () => (
       <div className="col-span-1 md:col-span-2">
         <h2 className="text-4xl font-black mb-6">SANU.</h2>
         <p className="text-muted-foreground max-w-sm">
-          {"< Cyber Security Enthusiast />"}<br />
-          Defending digital infrastructures with raw, no-nonsense security solutions.
+          {"< Full-Stack Developer & Blue Team Defender />"}<br />
+          Building secure digital products and defending infrastructures.
         </p>
       </div>
 
