@@ -4,7 +4,7 @@ const MarqueeBanner = () => (
       <div className="marquee-content">
         {[1, 2].map((i) => (
           <span key={i} className="whitespace-nowrap">
-            &nbsp;/// BLUE TEAM DEFENDER /// NETWORK SECURITY /// PENETRATION TESTING /// INCIDENT RESPONSE /// THREAT HUNTING /// VULNERABILITY ASSESSMENT /// SECURE BY DEFAULT&nbsp;
+            &nbsp;/// FULL-STACK DEVELOPER /// BLUE TEAM DEFENDER /// NETWORK SECURITY /// PENETRATION TESTING /// INCIDENT RESPONSE /// THREAT HUNTING /// SECURE BY DEFAULT&nbsp;
           </span>
         ))}
       </div>

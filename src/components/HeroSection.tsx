@@ -1,3 +1,5 @@
+import { Download } from "lucide-react";
+
 const HeroSection = () => {
   return (
     <section className="min-h-screen flex flex-col justify-center items-center px-4 pt-20 relative overflow-hidden border-b-4 border-foreground">
@@ -13,16 +15,16 @@ const HeroSection = () => {
           <span className="font-mono font-bold">SYSTEM STATUS: SECURED</span>
         </div>
 
-        {/* Name */}
+        {/* Title */}
         <h1 className="text-[10vw] md:text-[8vw] leading-[0.85] font-black uppercase tracking-tighter mb-4 reveal">
-          SOMESH RANJAN<br />
-          <span className="text-background text-stroke-black">BISWAL</span>
+          CYBERSECURITY<br />
+          <span className="text-background text-stroke-black">ENTHUSIAST</span>
         </h1>
 
         {/* Tagline */}
         <p className="font-mono text-lg md:text-2xl max-w-3xl mx-auto mb-6 bg-neo-green border-2 border-foreground p-4 shadow-hard reveal rotate-1">
-          Defending digital infrastructures, one threat at a time.<br />
-          <b>Blue Team • Security Analyst • Threat Hunter</b>
+          Full-Stack Developer & Blue Team Defender.<br />
+          <b>Full-Stack Dev • Blue Team • Security Analyst • Threat Hunter</b>
         </p>
 
         {/* Terminal */}
@@ -34,7 +36,7 @@ const HeroSection = () => {
           </div>
           <p>sanu@kali:~</p>
           <p>$ whoami</p>
-          <p className="text-neo-cyan">blue-team-defender<span className="cursor-blink"></span></p>
+          <p className="text-neo-cyan">blue-team-defender | full-stack-dev<span className="cursor-blink"></span></p>
         </div>
 
         {/* CTAs */}
@@ -46,10 +48,10 @@ const HeroSection = () => {
             VIEW PROJECTS
           </a>
           <a
-            href="#contact"
-            className="neo-btn bg-background text-foreground border-2 border-foreground px-10 py-5 text-xl shadow-hard hover:bg-neo-pink hover:text-foreground"
+            href="#"
+            className="neo-btn bg-background text-foreground border-2 border-foreground px-10 py-5 text-xl shadow-hard hover:bg-neo-pink hover:text-foreground flex items-center justify-center gap-2"
           >
-            CONTACT ME
+            <Download size={22} /> DOWNLOAD CV
           </a>
         </div>
       </div>

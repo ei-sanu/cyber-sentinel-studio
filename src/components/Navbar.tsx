@@ -4,10 +4,9 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { href: "#about", label: "/ABOUT" },
   { href: "#skills", label: "/SKILLS" },
-  { href: "#education", label: "/EDU" },
-  { href: "#projects", label: "/PROJECTS" },
-  { href: "#services", label: "/SERVICES" },
-  { href: "#contact", label: "CONTACT ME" },
+  { href: "#experience", label: "/LOGS" },
+  { href: "#projects", label: "/WORK" },
+  { href: "#contact", label: "HIRE ME" },
 ];
 
 const Navbar = () => {
@@ -25,7 +24,7 @@ const Navbar = () => {
 
         <div className="hidden md:flex gap-4 bg-card border-2 border-foreground p-2 shadow-hard">
           {navLinks.map((link) =>
-            link.label === "CONTACT ME" ? (
+            link.label === "HIRE ME" ? (
               <a
                 key={link.href}
                 href={link.href}
