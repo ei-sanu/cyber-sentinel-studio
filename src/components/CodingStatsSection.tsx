@@ -180,7 +180,7 @@ const CodingStatsSection = () => {
               </div>
             </div>
           </div>
-
+{/* //tryhackme */}
           {/* TryHackMe Column */}
           <div className="reveal flex flex-col h-full">
             <div className="flex items-center gap-2 mb-4 border-b border-background/20 pb-2">
