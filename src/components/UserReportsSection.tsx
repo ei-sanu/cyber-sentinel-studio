@@ -66,7 +66,7 @@ const UserReportsSection = () => (
         {[...reports, ...reports].map((r, i) => (
           <div
             key={`${r.id}-${i}`}
-            className={`flex-shrink-0 w-[450px] bg-foreground border-4 border-background/10 p-8 shadow-hard ${r.borderHover} hover:-translate-y-2 transition-all duration-500 relative overflow-hidden text-left whitespace-normal`}
+            className={`flex-shrink-0 w-[90vw] sm:w-[400px] md:w-[450px] max-w-[450px] bg-foreground border-4 border-background/10 p-8 shadow-hard ${r.borderHover} hover:-translate-y-2 transition-all duration-500 relative overflow-hidden text-left whitespace-normal`}
           >
             <div
               className="absolute top-0 left-0 w-full h-1"

@@ -5,7 +5,7 @@ const AboutSection = () => (
       <div className="md:col-span-4 reveal">
         <div className="aspect-square bg-muted border-4 border-foreground relative shadow-hard overflow-hidden group">
           <img
-            src="https://avatars.githubusercontent.com/u/ei-sanu"
+            src="/sanupic.jpeg"
             alt="Somesh Ranjan Biswal"
             className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
             onError={(e) => {

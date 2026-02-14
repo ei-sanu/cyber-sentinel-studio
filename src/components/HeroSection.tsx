@@ -1,6 +1,24 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Download } from "lucide-react";
+import { useState } from "react";
 
 const HeroSection = () => {
+  const [showDownloadDialog, setShowDownloadDialog] = useState(false);
+
+  const handleDownload = () => {
+    window.location.href = "someshCV.pdf";
+    setShowDownloadDialog(false);
+  };
+
   return (
     <section className="min-h-screen flex flex-col justify-center items-center px-4 pt-20 relative overflow-hidden border-b-4 border-foreground">
       {/* Decorative shapes */}
@@ -24,7 +42,7 @@ const HeroSection = () => {
         {/* Tagline */}
         <p className="font-mono text-sm sm:text-lg md:text-2xl max-w-3xl mx-auto mb-6 bg-neo-green border-2 border-foreground p-3 sm:p-4 shadow-hard reveal rotate-1">
           Full-Stack Developer & Blue Team Defender.<br />
-          <b>Full-Stack Dev • Blue Team • Security Analyst • Threat Hunter</b>
+          <b>React • No-SQL & P-SQL • AUTH • Security</b>
         </p>
 
         {/* Terminal */}
@@ -48,14 +66,43 @@ const HeroSection = () => {
           >
             VIEW PROJECTS
           </a>
-          <a
-            href="#"
+          <button
+            onClick={() => setShowDownloadDialog(true)}
             className="neo-btn bg-background text-foreground border-2 border-foreground px-6 sm:px-10 py-4 sm:py-5 text-lg sm:text-xl shadow-hard hover:bg-neo-pink hover:text-foreground flex items-center justify-center gap-2"
           >
             <Download size={20} /> DOWNLOAD CV
-          </a>
+          </button>
         </div>
       </div>
+
+      {/* Download Confirmation Dialog */}
+      <AlertDialog open={showDownloadDialog} onOpenChange={setShowDownloadDialog}>
+        <AlertDialogContent className="border-4 border-foreground shadow-hard bg-background max-w-md">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-black text-2xl uppercase tracking-tight border-b-4 border-foreground pb-3">
+              🔐 Download Confirmation
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-base font-mono pt-4 text-foreground">
+              <div className="bg-neo-blue/10 border-2 border-foreground p-4 mb-4">
+                <p className="font-bold mb-2">⚠️ SECURITY CHECK</p>
+                <p>You are about to download my CV. This document contains my professional information.</p>
+              </div>
+              <p className="font-semibold">Do you wish to proceed with the download?</p>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-col sm:flex-row gap-3">
+            <AlertDialogCancel className="neo-btn bg-background border-2 border-foreground shadow-hard hover:bg-neo-red hover:text-background font-bold uppercase">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDownload}
+              className="neo-btn bg-neo-green border-2 border-foreground shadow-hard hover:bg-foreground hover:text-background font-bold uppercase"
+            >
+              ✓ Proceed Download
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </section>
   );
 };

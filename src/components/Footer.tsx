@@ -40,7 +40,7 @@ const Footer = () => (
             target="_blank"
             rel="noopener noreferrer"
             aria-label={s.label}
-            className="w-11 h-11 rounded-lg bg-background/10 border border-background/20 flex items-center justify-center hover:bg-neo-green hover:text-foreground hover:border-neo-green transition-all hover:shadow-[0_0_12px_hsl(var(--neo-green)/0.4)]"
+            className="w-11 h-11 rounded-lg bg-background/10 border border-background/20 flex items-center justify-center hover:bg-neo-yellow hover:text-foreground hover:border-neo-yellow transition-all hover:shadow-[0_0_12px_hsl(var(--neo-yellow)/0.4)]"
           >
             <s.icon size={18} />
           </a>
@@ -53,7 +53,7 @@ const Footer = () => (
           <a
             key={n.label}
             href={n.href}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-background/10 border border-background/20 text-sm font-bold hover:bg-neo-green hover:text-foreground hover:border-neo-green transition-all hover:shadow-[0_0_12px_hsl(var(--neo-green)/0.4)]"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-background/10 border border-background/20 text-sm font-bold hover:bg-neo-yellow hover:text-foreground hover:border-neo-yellow transition-all hover:shadow-[0_0_12px_hsl(var(--neo-yellow)/0.4)]"
           >
             <n.icon size={16} />
             {n.label}
