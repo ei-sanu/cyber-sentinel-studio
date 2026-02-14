@@ -44,7 +44,7 @@ const CustomCursor = () => {
       ring.style.height = "52px";
       ring.style.background = "#FBFF48";
       ring.style.border = "3px solid #121212";
-      ring.style.borderRadius = "0px";
+      ring.style.borderRadius = "50%";
       ring.style.mixBlendMode = "difference";
       dot.style.opacity = "0";
     };
