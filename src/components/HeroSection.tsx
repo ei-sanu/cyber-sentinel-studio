@@ -18,7 +18,7 @@ const HeroSection = () => {
     window.location.href = "someshCV.pdf";
     setShowDownloadDialog(false);
   };
-
+//conflict
   return (
     <section className="min-h-screen flex flex-col justify-center items-center px-4 pt-20 relative overflow-hidden border-b-4 border-foreground">
       {/* Decorative shapes */}
