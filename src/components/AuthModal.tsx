@@ -1,7 +1,7 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { Loader2, X } from 'lucide-react';
 import { useState } from 'react';
-import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
 
 interface AuthModalProps {
     isOpen: boolean;
@@ -9,7 +9,7 @@ interface AuthModalProps {
 }
 
 const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
-    const { signInWithGoogle, signInWithFacebook, signInWithGithub } = useAuth();
+    const { signInWithGoogle, signInWithGithub } = useAuth();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -23,19 +23,6 @@ const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
             onClose();
         } catch (err: any) {
             setError(err.message || 'Failed to sign in with Google');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleFacebookSignIn = async () => {
-        setLoading(true);
-        setError('');
-        try {
-            await signInWithFacebook();
-            onClose();
-        } catch (err: any) {
-            setError(err.message || 'Failed to sign in with Facebook');
         } finally {
             setLoading(false);
         }
@@ -107,21 +94,6 @@ const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
                                 <>
                                     <FaGoogle size={24} />
                                     <span className="font-bold">CONTINUE WITH GOOGLE</span>
-                                </>
-                            )}
-                        </button>
-
-                        <button
-                            onClick={handleFacebookSignIn}
-                            disabled={loading}
-                            className="neo-btn w-full bg-background text-foreground border-2 border-foreground px-6 py-4 text-lg shadow-hard hover:bg-neo-cyan hover:text-background flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {loading ? (
-                                <Loader2 className="animate-spin" size={24} />
-                            ) : (
-                                <>
-                                    <FaFacebook size={24} />
-                                    <span className="font-bold">CONTINUE WITH FACEBOOK</span>
                                 </>
                             )}
                         </button>

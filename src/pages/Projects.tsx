@@ -75,16 +75,12 @@ const Projects = () => {
                             {categories.map((category) => (
                                 <button
                                     key={category}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        setSelectedCategory(category);
-                                    }}
-                                    className={`neo-btn px-6 py-3 border-2 border-foreground shadow-hard font-bold uppercase text-sm cursor-pointer ${selectedCategory === category
+                                    type="button"
+                                    onClick={() => setSelectedCategory(category)}
+                                    className={`neo-btn px-6 py-3 border-2 border-foreground shadow-hard font-bold uppercase text-sm transition-all ${selectedCategory === category
                                         ? 'bg-foreground text-background'
                                         : 'bg-background text-foreground hover:bg-neo-yellow'
                                         }`}
-                                    style={{ pointerEvents: 'auto' }}
                                 >
                                     {category}
                                 </button>

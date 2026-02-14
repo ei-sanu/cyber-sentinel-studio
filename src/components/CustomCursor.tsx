@@ -42,7 +42,7 @@ const CustomCursor = () => {
       isHovering = true;
       ring.style.width = "52px";
       ring.style.height = "52px";
-      ring.style.background = "#FBFF48";
+      ring.style.background = "#5B9BFF";
       ring.style.border = "3px solid #121212";
       ring.style.borderRadius = "50%";
       ring.style.mixBlendMode = "difference";
@@ -54,7 +54,7 @@ const CustomCursor = () => {
       ring.style.width = "32px";
       ring.style.height = "32px";
       ring.style.background = "transparent";
-      ring.style.border = "2px solid #FBFF48";
+      ring.style.border = "2px solid #5B9BFF";
       ring.style.borderRadius = "50%";
       ring.style.mixBlendMode = "normal";
       dot.style.opacity = "1";
@@ -113,7 +113,7 @@ const CustomCursor = () => {
           position: "fixed",
           width: 6,
           height: 6,
-          background: "#FBFF48",
+          background: "#5B9BFF",
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 99999,
@@ -121,7 +121,7 @@ const CustomCursor = () => {
           transition: "opacity 0.2s ease",
           left: -100,
           top: -100,
-          boxShadow: "0 0 8px 2px rgba(251,255,72,0.5)",
+          boxShadow: "0 0 8px 2px rgba(91,155,255,0.5)",
         }}
       />
       {/* Outer ring */}
@@ -132,7 +132,7 @@ const CustomCursor = () => {
           width: 32,
           height: 32,
           background: "transparent",
-          border: "2px solid #FBFF48",
+          border: "2px solid #5B9BFF",
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 99998,
