@@ -6,7 +6,6 @@ const CustomCursor = () => {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    // Detect touch device
     const hasTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     setIsTouchDevice(hasTouch);
     if (hasTouch) return;
@@ -41,19 +40,17 @@ const CustomCursor = () => {
     const expand = () => {
       if (isHovering) return;
       isHovering = true;
-      // Neo-yellow block on hover
-      ring.style.width = "48px";
-      ring.style.height = "48px";
-      ring.style.background = "#121212";
+      ring.style.width = "52px";
+      ring.style.height = "52px";
+      ring.style.background = "#FBFF48";
       ring.style.border = "3px solid #121212";
-      ring.style.borderRadius = "50%";
+      ring.style.borderRadius = "0px";
       ring.style.mixBlendMode = "difference";
       dot.style.opacity = "0";
     };
 
     const shrink = () => {
       isHovering = false;
-      // Crosshair ring
       ring.style.width = "32px";
       ring.style.height = "32px";
       ring.style.background = "transparent";
@@ -65,14 +62,14 @@ const CustomCursor = () => {
 
     const onOver = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      if (t.closest("a") || t.closest("button") || t.closest("input") || t.closest("textarea")) {
+      if (t.closest("a") || t.closest("button") || t.closest("input") || t.closest("textarea") || t.closest("[role='button']")) {
         expand();
       }
     };
 
     const onOut = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      if (t.closest("a") || t.closest("button") || t.closest("input") || t.closest("textarea")) {
+      if (t.closest("a") || t.closest("button") || t.closest("input") || t.closest("textarea") || t.closest("[role='button']")) {
         shrink();
       }
     };
@@ -93,7 +90,6 @@ const CustomCursor = () => {
     document.documentElement.addEventListener("mouseleave", onLeave);
     document.documentElement.addEventListener("mouseenter", onEnter);
 
-    // Start with shrink defaults
     shrink();
 
     return () => {
@@ -122,10 +118,10 @@ const CustomCursor = () => {
           pointerEvents: "none",
           zIndex: 99999,
           transform: "translate(-50%, -50%)",
-          transition: "opacity 0.15s",
+          transition: "opacity 0.2s ease",
           left: -100,
           top: -100,
-          boxShadow: "0 0 6px 2px rgba(251,255,72,0.5)",
+          boxShadow: "0 0 8px 2px rgba(251,255,72,0.5)",
         }}
       />
       {/* Outer ring */}
@@ -141,7 +137,8 @@ const CustomCursor = () => {
           pointerEvents: "none",
           zIndex: 99998,
           transform: "translate(-50%, -50%)",
-          transition: "width 0.3s cubic-bezier(.25,1,.5,1), height 0.3s cubic-bezier(.25,1,.5,1), background 0.3s, border-radius 0.3s, border 0.3s, opacity 0.15s, mix-blend-mode 0.3s",
+          transition:
+            "width 0.35s cubic-bezier(.25,1,.5,1), height 0.35s cubic-bezier(.25,1,.5,1), background 0.35s ease, border-radius 0.35s ease, border 0.35s ease, opacity 0.2s ease, mix-blend-mode 0.35s ease",
           left: -100,
           top: -100,
         }}
