@@ -16,8 +16,8 @@ const navLinks = [
 ];
 
 const Footer = () => (
-  <footer className="bg-foreground text-background py-16 px-4 border-t-4 border-neo-green font-mono relative overflow-hidden">
-    <div className="relative z-10 flex flex-col items-center gap-10 max-w-3xl mx-auto text-center">
+  <footer className="bg-foreground text-background py-8 sm:py-10 px-4 border-t-4 border-neo-green font-mono relative overflow-hidden">
+    <div className="relative z-10 flex flex-col items-center gap-6 max-w-3xl mx-auto text-center">
 
       {/* Brand */}
       <div>
