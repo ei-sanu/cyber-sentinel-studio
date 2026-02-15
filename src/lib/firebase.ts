@@ -12,6 +12,19 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+
+// Configure providers with custom parameters
 export const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
+    prompt: 'select_account'
+});
+
 export const facebookProvider = new FacebookAuthProvider();
+facebookProvider.setCustomParameters({
+    display: 'popup'
+});
+
 export const githubProvider = new GithubAuthProvider();
+githubProvider.setCustomParameters({
+    allow_signup: 'true'
+});

@@ -10,6 +10,11 @@ export default defineConfig(() => ({
     hmr: {
       overlay: false,
     },
+    headers: {
+      // Allow popups for Firebase authentication
+      'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
+      'Cross-Origin-Embedder-Policy': 'unsafe-none'
+    }
   },
   plugins: [react()],
   resolve: {

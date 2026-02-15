@@ -31,9 +31,21 @@ const CodingStatsSection = () => {
   useEffect(() => {
     const fetchGitHubData = async () => {
       try {
-        const response = await fetch("https://api.github.com/users/ei-sanu");
+        const response = await fetch("https://api.github.com/users/ei-sanu", {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
 
         if (!response.ok) {
+          // GitHub API rate limit or other error - use fallback data
+          console.warn('GitHub API unavailable, using fallback data');
+          setGh({
+            repos: 20,
+            followers: 10,
+            contributions: "500+",
+            joined: "2019",
+          });
           return;
         }
 
@@ -45,7 +57,7 @@ const CodingStatsSection = () => {
           joined: data.created_at ? new Date(data.created_at).getFullYear().toString() : "--",
         });
       } catch (error) {
-        // Set default values on error
+        // Network error or fetch blocked - use fallback data silently
         setGh({
           repos: 20,
           followers: 10,
@@ -180,7 +192,7 @@ const CodingStatsSection = () => {
               </div>
             </div>
           </div>
-{/* //tryhackme */}
+          {/* //tryhackme */}
           {/* TryHackMe Column */}
           <div className="reveal flex flex-col h-full">
             <div className="flex items-center gap-2 mb-4 border-b border-background/20 pb-2">
