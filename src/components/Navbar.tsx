@@ -114,7 +114,7 @@ const Navbar = () => {
           <a
             href="/"
             onClick={(e) => handleNavClick(e, "#")}
-            className="bg-background border-2 border-foreground px-3 py-1 text-lg sm:text-2xl font-black shadow-hard hover:bg-neo-yellow transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
+            className="bg-background border-2 border-foreground px-3 py-1 text-lg sm:text-2xl font-black shadow-hard hover:bg-neo-yellow active:bg-neo-yellow transition-all hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[2px] active:translate-y-[2px] hover:shadow-none active:shadow-none"
           >
             SANU.exe
           </a>
@@ -205,7 +205,7 @@ const Navbar = () => {
 
           {/* Mobile hamburger - Settings icon with rotation */}
           <button
-            className="md:hidden bg-background border-2 border-foreground p-2 shadow-hard hover:bg-neo-yellow transition-colors relative z-[70]"
+            className="md:hidden bg-background border-2 border-foreground p-2 shadow-hard hover:bg-neo-yellow active:bg-neo-yellow transition-all hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[2px] active:translate-y-[2px] hover:shadow-none active:shadow-none relative z-[70]"
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
           >
@@ -221,9 +221,9 @@ const Navbar = () => {
 
         {/* Mobile terminal menu */}
         <div
-          className={`md:hidden mt-2 pointer-events-auto transition-all duration-300 ease-in-out origin-top-right ${open
-            ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+          className={`md:hidden mt-2 transition-all duration-300 ease-in-out origin-top ${open
+            ? "opacity-100 scale-y-100 translate-y-0 pointer-events-auto max-h-[100vh]"
+            : "opacity-0 scale-y-95 -translate-y-2 pointer-events-none max-h-0 overflow-hidden"
             }`}
         >
           <div className="bg-foreground border-2 border-neo-green shadow-hard-lg mx-2 overflow-hidden">
