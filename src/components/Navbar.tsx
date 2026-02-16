@@ -218,7 +218,7 @@ const Navbar = () => {
             />
           </button>
         </div>
-
+{/* mobile menu */}
         {/* Mobile terminal menu */}
         <div
           className={`md:hidden mt-2 transition-all duration-300 ease-in-out origin-top ${open
