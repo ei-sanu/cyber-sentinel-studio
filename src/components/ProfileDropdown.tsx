@@ -32,15 +32,8 @@ const ProfileDropdown = ({ isOpen, onClose, onSignOut }: ProfileDropdownProps) =
 
     if (!isOpen || !user) return null;
 
-    // Get user email from Clerk user object
-    const userEmail = user.primaryEmailAddress?.emailAddress || user.emailAddresses?.[0]?.emailAddress || "";
-
-    // Get user display name
-    const displayName = user.fullName || `${user.firstName || ""} ${user.lastName || ""}`.trim() || "User";
-
-    // Get join date from Clerk user
-    const joinDate = user.createdAt
-        ? new Date(user.createdAt).toLocaleDateString('en-US', {
+    const joinDate = user.metadata.creationTime
+        ? new Date(user.metadata.creationTime).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
@@ -56,10 +49,10 @@ const ProfileDropdown = ({ isOpen, onClose, onSignOut }: ProfileDropdownProps) =
             <div className="bg-neo-green border-b-4 border-foreground p-3">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full border-2 border-foreground overflow-hidden bg-neo-blue">
-                        {user.imageUrl ? (
+                        {user.photoURL ? (
                             <img
-                                src={user.imageUrl}
-                                alt={displayName}
+                                src={user.photoURL}
+                                alt={user.displayName || "User"}
                                 className="w-full h-full object-cover"
                             />
                         ) : (
@@ -70,10 +63,10 @@ const ProfileDropdown = ({ isOpen, onClose, onSignOut }: ProfileDropdownProps) =
                     </div>
                     <div className="flex-1 min-w-0">
                         <p className="font-black text-sm truncate">
-                            {displayName}
+                            {user.displayName || "User"}
                         </p>
                         <p className="font-mono text-xs text-foreground/70 truncate">
-                            ID: {user.id.slice(0, 8)}...
+                            ID: {user.uid.slice(0, 8)}...
                         </p>
                     </div>
                 </div>
@@ -85,7 +78,7 @@ const ProfileDropdown = ({ isOpen, onClose, onSignOut }: ProfileDropdownProps) =
                     <Mail size={16} className="mt-1 shrink-0" />
                     <div className="min-w-0 flex-1">
                         <p className="font-mono text-xs font-bold mb-1">EMAIL</p>
-                        <p className="font-mono text-xs break-all">{userEmail}</p>
+                        <p className="font-mono text-xs break-all">{user.email}</p>
                     </div>
                 </div>
 
@@ -93,7 +86,7 @@ const ProfileDropdown = ({ isOpen, onClose, onSignOut }: ProfileDropdownProps) =
                     <User size={16} className="mt-1 shrink-0" />
                     <div className="min-w-0 flex-1">
                         <p className="font-mono text-xs font-bold mb-1">DISPLAY NAME</p>
-                        <p className="font-mono text-xs">{displayName}</p>
+                        <p className="font-mono text-xs">{user.displayName || "Not set"}</p>
                     </div>
                 </div>
 
@@ -108,7 +101,7 @@ const ProfileDropdown = ({ isOpen, onClose, onSignOut }: ProfileDropdownProps) =
 
             {/* Actions */}
             <div className="p-3 space-y-2">
-                {isAdmin(userEmail) && (
+                {isAdmin(user.email) && (
                     <Link
                         to="/admin"
                         onClick={onClose}
