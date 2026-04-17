@@ -34,7 +34,7 @@ const ContactSection = () => {
           name: form.name.trim(),
           email: form.email.trim(),
           message: form.message.trim(),
-          user_id: user?.uid || null
+          user_id: user?.id || null
         });
 
       if (error) {

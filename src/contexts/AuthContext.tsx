@@ -1,123 +1,78 @@
-import { auth, facebookProvider, githubProvider, googleProvider } from '@/lib/firebase';
-import {
-    User,
-    browserPopupRedirectResolver,
-    signOut as firebaseSignOut,
-    getRedirectResult,
-    onAuthStateChanged,
-    signInWithPopup,
-    signInWithRedirect
-} from 'firebase/auth';
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { useAuth as useClerkAuth, useUser } from '@clerk/clerk-react';
+import { ReactNode, createContext, useContext } from 'react';
 
 interface AuthContextType {
-    user: User | null;
+    user: any;
     loading: boolean;
     signInWithGoogle: () => Promise<void>;
-    signInWithFacebook: () => Promise<void>;
     signInWithGithub: () => Promise<void>;
     signOut: () => Promise<void>;
+    isSignedIn: boolean;
+    userEmail: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Helper function to extract email from Clerk user object
+const getUserEmail = (clerkUser: any): string | null => {
+    if (!clerkUser) return null;
+    return clerkUser.primaryEmailAddress?.emailAddress ||
+        clerkUser.emailAddresses?.[0]?.emailAddress ||
+        null;
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+    const { signOut: clerkSignOut, isSignedIn } = useClerkAuth();
+    const { user, isLoaded } = useUser();
 
-    useEffect(() => {
-        // Check for redirect result on mount
-        getRedirectResult(auth)
-            .then((result) => {
-                if (result?.user) {
-                    setUser(result.user);
-                }
-            })
-            .catch((error) => {
-                console.error('Error getting redirect result:', error);
-            });
-
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setUser(user);
-            setLoading(false);
-        });
-
-        return unsubscribe;
-    }, []);
+    const userEmail = getUserEmail(user);
 
     const signInWithGoogle = async () => {
         try {
-            await signInWithPopup(auth, googleProvider, browserPopupRedirectResolver);
+            // Clerk handles Google sign-in through its SignIn component
+            // This function is called from AuthModal where we can trigger the sign-in flow
+            if (window.__clerkSignInGoogle) {
+                await window.__clerkSignInGoogle();
+            }
         } catch (error: any) {
             console.error('Error signing in with Google:', error);
-            // If popup fails (e.g., blocked by browser, COOP issues), try redirect
-            if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
-                try {
-                    await signInWithRedirect(auth, googleProvider);
-                } catch (redirectError) {
-                    console.error('Error with redirect:', redirectError);
-                    throw redirectError;
-                }
-            } else {
-                throw error;
-            }
-        }
-    };
-
-    const signInWithFacebook = async () => {
-        try {
-            await signInWithPopup(auth, facebookProvider, browserPopupRedirectResolver);
-        } catch (error: any) {
-            console.error('Error signing in with Facebook:', error);
-            // If popup fails, try redirect
-            if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
-                try {
-                    await signInWithRedirect(auth, facebookProvider);
-                } catch (redirectError) {
-                    console.error('Error with redirect:', redirectError);
-                    throw redirectError;
-                }
-            } else {
-                throw error;
-            }
+            throw error;
         }
     };
 
     const signInWithGithub = async () => {
         try {
-            await signInWithPopup(auth, githubProvider, browserPopupRedirectResolver);
+            // Clerk handles Github sign-in through its SignIn component
+            // This function is called from AuthModal where we can trigger the sign-in flow
+            if (window.__clerkSignInGithub) {
+                await window.__clerkSignInGithub();
+            }
         } catch (error: any) {
             console.error('Error signing in with Github:', error);
-            // If popup fails, try redirect
-            if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
-                try {
-                    await signInWithRedirect(auth, githubProvider);
-                } catch (redirectError) {
-                    console.error('Error with redirect:', redirectError);
-                    throw redirectError;
-                }
-            } else {
-                throw error;
-            }
+            throw error;
         }
     };
 
     const signOut = async () => {
         try {
-            await firebaseSignOut(auth);
+            await clerkSignOut();
         } catch (error) {
             console.error('Error signing out:', error);
             throw error;
         }
     };
 
+    // For backward compatibility, add email property to user object
+    const userWithEmail = user ? { ...user, email: userEmail } : null;
+
     const value = {
-        user,
-        loading,
+        user: userWithEmail,
+        loading: !isLoaded,
         signInWithGoogle,
-        signInWithFacebook,
         signInWithGithub,
         signOut,
+        isSignedIn,
+        userEmail,
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

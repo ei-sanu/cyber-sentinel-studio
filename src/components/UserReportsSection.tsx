@@ -143,8 +143,8 @@ const UserReportsSection = () => {
 
       const commentData = {
         text: commentText.trim(),
-        user_id: user?.uid || null,
-        user_name: user?.displayName || 'Anonymous',
+        user_id: user?.id || null,
+        user_name: user?.fullName || `${user?.firstName || ''} ${user?.lastName || ''}`.trim() || 'Anonymous',
       };
 
       const { data, error } = await supabase
@@ -385,5 +385,3 @@ const UserReportsSection = () => {
 };
 
 export default UserReportsSection;
-
-

@@ -1,4 +1,4 @@
-import { useAuth } from '@/contexts/AuthContext';
+import { useSignIn } from '@clerk/clerk-react';
 import { Loader2, X } from 'lucide-react';
 import { useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
@@ -9,34 +9,44 @@ interface AuthModalProps {
 }
 
 const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
-    const { signInWithGoogle, signInWithGithub } = useAuth();
+    const { signIn, isLoaded } = useSignIn();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     if (!isOpen) return null;
 
     const handleGoogleSignIn = async () => {
+        if (!isLoaded || !signIn) return;
+
         setLoading(true);
         setError('');
         try {
-            await signInWithGoogle();
-            onClose();
+            await signIn.authenticateWithRedirect({
+                strategy: 'oauth_google',
+                redirectUrl: `${window.location.origin}/`,
+                redirectUrlComplete: `${window.location.origin}/`,
+            });
         } catch (err: any) {
-            setError(err.message || 'Failed to sign in with Google');
-        } finally {
+            console.error('Error signing in with Google:', err);
+            setError(err.errors?.[0]?.message || 'Failed to sign in with Google');
             setLoading(false);
         }
     };
 
     const handleGithubSignIn = async () => {
+        if (!isLoaded || !signIn) return;
+
         setLoading(true);
         setError('');
         try {
-            await signInWithGithub();
-            onClose();
+            await signIn.authenticateWithRedirect({
+                strategy: 'oauth_github',
+                redirectUrl: `${window.location.origin}/`,
+                redirectUrlComplete: `${window.location.origin}/`,
+            });
         } catch (err: any) {
-            setError(err.message || 'Failed to sign in with Github');
-        } finally {
+            console.error('Error signing in with Github:', err);
+            setError(err.errors?.[0]?.message || 'Failed to sign in with Github');
             setLoading(false);
         }
     };
@@ -85,7 +95,7 @@ const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
                     <div className="space-y-4">
                         <button
                             onClick={handleGoogleSignIn}
-                            disabled={loading}
+                            disabled={loading || !isLoaded}
                             className="neo-btn w-full bg-background text-foreground border-2 border-foreground px-6 py-4 text-lg shadow-hard hover:bg-neo-blue hover:text-background flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? (
@@ -100,7 +110,7 @@ const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
 
                         <button
                             onClick={handleGithubSignIn}
-                            disabled={loading}
+                            disabled={loading || !isLoaded}
                             className="neo-btn w-full bg-background text-foreground border-2 border-foreground px-6 py-4 text-lg shadow-hard hover:bg-foreground hover:text-background flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? (
